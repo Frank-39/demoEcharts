@@ -27,13 +27,14 @@ var connection = mysql.createConnection({
 });
 //2.连接数据库 打开冰箱门
 connection.connect();
-data={}
-data2={}
 //3.执行数据操作
-data3={}
+
 function scheduleCronstyle(){
     schedule.scheduleJob('*/1 * * * * *', function(){
         connection.query('select fticketno from 查询历史时段票捡记录 ',function(error,results,field){
+            data={}
+            data2={}
+            data3={}
             if(error) throw error;
             // console.log(results[0])
             //where funiqueid< 576579499559374149
