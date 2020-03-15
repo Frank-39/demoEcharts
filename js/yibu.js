@@ -65,11 +65,11 @@ $(document).ready(function(){
                     {name: '吉林', value: 1},
                     {name: '福建', value: 1},
                     {name: '广东', value: 1},
-                    {name: '西藏', value: 72},
+                    {name: '西藏', value: 1},
                     {name: '四川', value: 1},
                     {name: '宁夏', value: 1},
                     {name: '香港', value: 0},
-                    {name: '辽宁', value: 8347},
+                    {name: '辽宁', value:1},
                     {name: '江苏', value: 1},
                     {name: '山东', value: 1},
                     {name: '河南', value: 1},
@@ -80,9 +80,9 @@ $(document).ready(function(){
                     {name: '陕西', value: 1},
                     {name: '甘肃', value: 1},
                     {name: '云南', value: 1},
-                    {name: '青海', value: 517},
+                    {name: '青海', value: 1},
                     {name: '黑龙江', value: 1},
-                    {name: '海南', value: 237}
+                    {name: '海南', value: 17}
                 ]
 
             }
@@ -90,19 +90,37 @@ $(document).ready(function(){
     }
     //为echarts对象加载数据
     myChart.setOption(option);
+    var getting = {
+        url : "../data/people.json", //后台查询验证的方法
+        dataTpye : "json",
+        data : {
 
-//获取数据
-    $.getJSON("data/people.json",function(data11){
-        var d=data11.people;
+        },
+        type : "get",
+        success : function(msg) {
 
-// fetchData(function (data11) {
-        myChart.setOption({
-            series: [{
-                data:d
-            },
-            ]
-        });
-    });
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+            //获取数据
+            var d=msg.people;
+
+
+            // fetchData(function (data11) {
+            myChart.setOption({
+                series: [{
+                    data:d
+                },
+                ]
+                });
+
+            // 使用刚指定的配置项和数据显示图表。
+
+        },
+        error:function(){  //请求失败的回调方法
+            alert("请求失败，请重试");
+        }
+    };
+
+
+    window.setInterval(function(){$.ajax(getting)},1000);   //每三秒调用一次ajax
+
+
 });
